@@ -7,7 +7,7 @@ public class Config {
         return dotenv.get("API_KEY");
     }
 
-    public String getSpreedSheetID() {
-        return dotenv.get("SPREED_SHEET_ID");
+    public String getSpreadSheetID() {
+        return dotenv.get("SPREAD_SHEET_ID");
     }
 }
