@@ -38,3 +38,4 @@ build/
 ### Mac OS ###
 .DS_Store.env
 .env
+/src/main/resources/credentials.json
