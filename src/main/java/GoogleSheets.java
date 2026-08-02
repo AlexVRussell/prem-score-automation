@@ -1,4 +1,13 @@
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.sheets.v4.Sheets;
+import com.google.auth.http.HttpCredentialsAdapter;
+import java.io.InputStream;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 
 public class GoogleSheets {
     private final Sheets sheets;
@@ -10,6 +19,32 @@ public class GoogleSheets {
     }
 
     private Sheets createSheetsService() {
-        return null;
+        try {
+
+            InputStream credentials =
+                    getClass().getClassLoader().getResourceAsStream("credentials.json");
+
+            if (credentials == null) {
+                throw new RuntimeException("credentials.json not found");
+            }
+
+            GoogleCredentials googleCredentials =
+                    GoogleCredentials.fromStream(credentials)
+                            .createScoped(Collections.singleton(
+                                    "https://www.googleapis.com/auth/spreadsheets"));
+
+            return new Sheets.Builder(
+                    GoogleNetHttpTransport.newTrustedTransport(),
+                    GsonFactory.getDefaultInstance(),
+                    new HttpCredentialsAdapter(googleCredentials))
+                    .setApplicationName("Prem Score Automation")
+                    .build();
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
