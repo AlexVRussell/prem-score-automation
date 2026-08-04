@@ -7,7 +7,7 @@ public class Main {
         GoogleSheets sheets = new GoogleSheets(config);
 
         sheets.updateCell(
-                "A1",
+                "F373",
                 "Hello World"
         );
     }
