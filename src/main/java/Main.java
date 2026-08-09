@@ -6,9 +6,11 @@ public class Main {
 
         GoogleSheets sheets = new GoogleSheets(config);
 
-        sheets.updateCell(
-                "F373",
-                "Hello World"
-        );
+//        sheets.updateCell(
+//                "F373",
+//                "Hello World"
+//        );
+        FootballApi api = new FootballApi(config);
+        api.getTodayMatches();
     }
 }

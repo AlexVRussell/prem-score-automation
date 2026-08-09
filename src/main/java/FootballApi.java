@@ -9,9 +9,9 @@ import java.net.http.HttpResponse;
 public class FootballApi {
     private final String apiKey;
     private final HttpClient client;
-    private static final String BASE_URL = "https://v3.football.api-sports.io";
+    private static final String BASE_URL = "https://footballdata.io/api/v1";
     private static final String FIXTURES_ENDPOINT = "/fixtures";
-    private static final int PREMIER_LEAGUE_ID = 39;
+    private static final int PREMIER_LEAGUE_ID = 15;
     private static final int CURRENT_SEASON = 2025;
 
 
@@ -21,7 +21,7 @@ public class FootballApi {
     }
 
     public List<Match> getTodayMatches() {
-        String url = buildFixturesUrl();
+        String url = buildFixturesUrl(LocalDate.of(2025, 8, 21));
         HttpRequest request = buildRequest(url);
         HttpResponse<String> response = sendRequest(request);
         System.out.println(response.statusCode());
@@ -30,19 +30,19 @@ public class FootballApi {
         return null;
     }
 
-    private String buildFixturesUrl() {
-        String today = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+    private String buildFixturesUrl(LocalDate date) {
+        String formattedDate = date.format(DateTimeFormatter.ISO_LOCAL_DATE);
         return BASE_URL +
-                FIXTURES_ENDPOINT +
-                "?league=" + PREMIER_LEAGUE_ID +
-                "&season=" + CURRENT_SEASON +
-                "&date=" + today;
+                "/fixtures/today" +
+                "?league_id=" + PREMIER_LEAGUE_ID +
+                "&date=" + formattedDate;
     }
 
     private HttpRequest buildRequest(String url) {
         return HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .header("Authorization", "Bearer" + apiKey)
+                .header("Authorization", "Bearer " + apiKey)
                 .GET()
                 .build();
     }
