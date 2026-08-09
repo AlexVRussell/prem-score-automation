@@ -1,0 +1,15 @@
+package dto;
+
+public class Score {
+    private Integer home;
+
+    private Integer away;
+
+    public Integer getHome() {
+        return home;
+    }
+
+    public Integer getAway() {
+        return away;
+    }
+}

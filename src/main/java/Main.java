@@ -1,16 +1,21 @@
-import io.github.cdimascio.dotenv.Dotenv;
+import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Config config = new Config();
+        FootballApi footballApi = new FootballApi(config);
+        GoogleSheets googleSheets = new GoogleSheets(config);
 
-        GoogleSheets sheets = new GoogleSheets(config);
+        List<Match> matches =
+                footballApi.getMatches(LocalDate.of(2026, 8, 21));
 
-//        sheets.updateCell(
-//                "F373",
-//                "Hello World"
-//        );
-        FootballApi api = new FootballApi(config);
-        api.getTodayMatches();
+        for (Match match : matches) {
+
+            if (match.getLeague().getLeagueId() != 15) {
+                continue;
+            }
+
+            System.out.println(match);}
     }
 }
