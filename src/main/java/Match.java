@@ -33,14 +33,20 @@ public class Match {
         return status;
     }
 
+
+    // look into other statuses, to make response shape have the best context
     @Override
     public String toString() {
-        return home_team.getTeamName()
-                + " "
-                + score.getHome()
-                + "-"
-                + score.getAway()
-                + " "
-                + away_team.getTeamName();
+        if (status.equals("incomplete")) {
+            return "incomplete";
+        } else {
+            return home_team.getTeamName()
+                    + " "
+                    + score.getHome()
+                    + "-"
+                    + score.getAway()
+                    + " "
+                    + away_team.getTeamName();
+        }
     }
 }
