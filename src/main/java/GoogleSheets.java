@@ -69,4 +69,12 @@ public class GoogleSheets {
             throw new RuntimeException(e);
         }
     }
+
+    public void updateRow(
+            int row,
+            String match,
+            String status,
+            String date) {
+
+    }
 }

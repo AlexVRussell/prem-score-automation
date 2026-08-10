@@ -4,14 +4,12 @@ import dto.Team;
 
 public class Match {
     private League league;
-
     private Team home_team;
-
     private Team away_team;
-
     private Score score;
-
     private String status;
+    private String match_date;
+
 
     public League getLeague() {
         return league;

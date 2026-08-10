@@ -7,8 +7,7 @@ public class Main {
         FootballApi footballApi = new FootballApi(config);
         GoogleSheets googleSheets = new GoogleSheets(config);
 
-        List<Match> matches =
-                footballApi.getMatches(LocalDate.of(2026, 8, 21));
+        List<Match> matches = footballApi.getMatches(LocalDate.of(2026, 8, 21));
 
         for (Match match : matches) {
 
@@ -19,6 +18,6 @@ public class Main {
             System.out.println(match);
         }
 
-        // logic for adding to excel!!!
+        // logic for adding to excel
     }
 }
