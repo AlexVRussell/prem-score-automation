@@ -70,11 +70,14 @@ public class GoogleSheets {
         }
     }
 
-    public void updateRow(
-            int row,
-            String match,
-            String status,
-            String date) {
+    public void updateRow(int row, String match, String status, String date) {
+        try {
+            ValueRange body = new ValueRange().setValues(List.of(List.of(match, status, date)));
+            Sheets.Spreadsheets.Values values = sheets.spreadsheets().values();
+            values.update(spreadSheetId, "A" + row + ":C" + row, body).setValueInputOption("RAW").execute();
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

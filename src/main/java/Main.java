@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.List;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +19,7 @@ public class Main {
             System.out.println(match);
         }
 
-        // logic for adding to excel
+        // test logic for adding to excel
+        googleSheets.updateRow(2, "Liverpool vs Bournemouth", "Scheduled", "2025-08-15");
     }
 }
