@@ -6,6 +6,8 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import java.util.List;
 import com.google.auth.http.HttpCredentialsAdapter;
+import dto.Score;
+
 import java.io.InputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -70,11 +72,11 @@ public class GoogleSheets {
         }
     }
 
-    public void updateRow(int row, String match, String status, String date) {
+    public void updateRow(int row, String match, String status, String date, String score) {
         try {
-            ValueRange body = new ValueRange().setValues(List.of(List.of(match, status, date)));
+            ValueRange body = new ValueRange().setValues(List.of(List.of(match, status, date, score)));
             Sheets.Spreadsheets.Values values = sheets.spreadsheets().values();
-            values.update(spreadSheetId, "A" + row + ":C" + row, body).setValueInputOption("RAW").execute();
+            values.update(spreadSheetId, "A" + row + ":D" + row, body).setValueInputOption("RAW").execute();
 
         } catch (Exception e) {
             throw new RuntimeException(e);

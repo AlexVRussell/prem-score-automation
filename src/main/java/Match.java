@@ -10,7 +10,6 @@ public class Match {
     private String status;
     private String match_date;
 
-
     public League getLeague() {
         return league;
     }
@@ -23,8 +22,12 @@ public class Match {
         return away_team;
     }
 
-    public Score getScore() {
-        return score;
+    public String getScore() {
+        return score.toString();
+    }
+
+    public String getMatchDate () {
+        return match_date;
     }
 
     public String getStatus() {
