@@ -22,8 +22,8 @@ public class FootballApi {
         this.client = HttpClient.newHttpClient();
     }
 
-    public List<Match> getMatches(LocalDate date) {
-        String url = buildMatchesUrl(date);
+    public List<Match> getFixtures(LocalDate from, LocalDate to) {
+        String url = buildFixturesUrl(from, to);
         HttpRequest request = buildRequest(url);
         HttpResponse<String> response = sendRequest(request);
         System.out.println(response.body());
@@ -40,9 +40,9 @@ public class FootballApi {
     }
 
 
-    private String buildMatchesUrl(LocalDate date) {
-        String formattedDate = date.format(DateTimeFormatter.ISO_LOCAL_DATE);
-        return BASE_URL + "/matches/date/" + formattedDate;
+    private String buildFixturesUrl(LocalDate from, LocalDate to) {
+
+        return BASE_URL + "/fixtures/upcoming?league_id=15" + "&from=" + from + "&to=" + to;
     }
 
     private HttpRequest buildRequest(String url) {

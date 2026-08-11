@@ -9,14 +9,14 @@ public class Main {
         GoogleSheets googleSheets = new GoogleSheets(config);
         int row = 2;
 
-        List<Match> matches = footballApi.getMatches(LocalDate.of(2026, 8, 21));
+        List<Match> matches = footballApi.getFixtures(LocalDate.of(2026, 8, 21), LocalDate.of(2026, 8, 24));
 
         for (Match match : matches) {
             if (match.getLeague().getLeagueId() != 15) {
                 continue;
             }
 
-            System.out.println(match.getScore());
+            System.out.println("Match: " + match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName() + " - Score: " +  match.getScore());
             googleSheets.updateRow(row, match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName(), match.getStatus(), match.getMatchDate(), match.getScore());
             row++;
         }
