@@ -1,4 +1,24 @@
 name: prem-automation.yml
 on:
+  workflow_dispatch:
+
+  schedule:
+    - cron '*
+    - /5 * * * *'
 
 jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Run application
+        run: mvn clean compile exec:java
+
