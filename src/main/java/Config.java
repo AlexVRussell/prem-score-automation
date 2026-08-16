@@ -1,13 +1,31 @@
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class Config {
-    private final Dotenv dotenv = Dotenv.load();
+    private final Dotenv dotenv;
+
+    public Config() {
+        dotenv = Dotenv.configure().ignoreIfMissing().load();
+    }
 
     public String getKey() {
-        return dotenv.get("API_KEY");
+        return getValue("API_KEY");
     }
 
     public String getSpreadSheetID() {
-        return dotenv.get("SPREAD_SHEET_ID");
+        return getValue("SPREAD_SHEET_ID");
+    }
+
+    private String getValue(String key) {
+        String value = System.getenv(key);
+
+        if (value == null) {
+            value = dotenv.get(key);
+        }
+
+        if (value == null) {
+            throw new RuntimeException("Missing configuration: " + key);
+        }
+
+        return value;
     }
 }
