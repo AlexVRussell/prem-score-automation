@@ -18,6 +18,12 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - name: Create google creds
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: echo "$GOOGLE_CREDENTIALS" > src/main/resources/credentials.json
+
       - name: Run application
         env:
           API_KEY: ${{ secrets.API_KEY }}
