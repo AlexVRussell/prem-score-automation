@@ -16,7 +16,7 @@ public class Main {
                 continue;
             }
 
-            System.out.println("Match: " + match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName() + " - Score: " +  match.getScore());
+            System.out.println("Match: " + match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName() + " - Score: " +  match.getScore() + " - Date: " + match.getMatchDate());
             googleSheets.updateRow(row, match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName(), match.getStatus(), match.getMatchDate(), match.getScore());
             row++;
         }

@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import dto.League;
 import dto.Score;
 import dto.Team;
@@ -27,7 +30,10 @@ public class Match {
     }
 
     public String getMatchDate () {
-        return match_date;
+        DateTimeFormatter input = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss");
+        DateTimeFormatter output = DateTimeFormatter.ofPattern("EEEE d, yyyy, hh:mm a");
+        LocalDateTime dateTime = LocalDateTime.parse(match_date, input);
+        return dateTime.format(output);
     }
 
     public String getStatus() {
