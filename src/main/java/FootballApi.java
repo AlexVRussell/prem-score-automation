@@ -26,6 +26,10 @@ public class FootballApi {
         String url = buildFixturesUrl(from, to);
         HttpRequest request = buildRequest(url);
         HttpResponse<String> response = sendRequest(request);
+
+        System.out.println("STATUS: " + response.statusCode());
+        System.out.println("BODY: " + response.body());
+
         System.out.println(response.body());
         return parseMatches(response.body());
     }
