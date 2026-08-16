@@ -19,5 +19,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Run application
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          SPREAD_SHEET_ID: ${{ secrets.SPREAD_SHEET_ID }}
         run: mvn clean compile exec:java
 
