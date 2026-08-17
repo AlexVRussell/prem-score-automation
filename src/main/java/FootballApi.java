@@ -24,9 +24,10 @@ public class FootballApi {
 
     public List<Match> getFixtures(LocalDate from, LocalDate to) {
         String url = buildFixturesUrl(from, to);
+        System.out.println("REQUEST URL: " + url);
         HttpRequest request = buildRequest(url);
         HttpResponse<String> response = sendRequest(request);
-        // System.out.println(response.body());
+        System.out.println("RESPONSE: " + response.body());
         return parseMatches(response.body());
     }
 

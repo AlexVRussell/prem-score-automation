@@ -2,7 +2,6 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import java.util.List;
 import com.google.auth.http.HttpCredentialsAdapter;
@@ -72,6 +71,20 @@ public class GoogleSheets {
         }
     }
 
+    public List<List<Object>> getRows() {
+        try {
+            ValueRange response = sheets.spreadsheets()
+                    .values()
+                    .get(spreadSheetId, "A:D")
+                    .execute();
+
+            return response.getValues();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void updateRow(int row, String match, String status, String date, String score) {
         try {
             ValueRange body = new ValueRange().setValues(List.of(List.of(match, status, date, score)));
@@ -81,5 +94,43 @@ public class GoogleSheets {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void updateOrAddMatch(
+            String match,
+            String status,
+            String date,
+            String score) {
+
+        List<List<Object>> rows = getRows();
+
+        for (int i = 1; i < rows.size(); i++) {
+
+            List<Object> row = rows.get(i);
+
+            if (!row.isEmpty() &&
+                    row.get(0).toString().equals(match)) {
+
+                updateRow(
+                        i + 1,
+                        match,
+                        status,
+                        date,
+                        score.toString()
+                );
+
+                return;
+            }
+        }
+
+        int newRow = rows.size() + 1;
+
+        updateRow(
+                newRow,
+                match,
+                status,
+                date,
+                score.toString()
+        );
     }
 }

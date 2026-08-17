@@ -9,7 +9,7 @@ public class Main {
         FootballApi footballApi = new FootballApi(config);
         GoogleSheets googleSheets = new GoogleSheets(config);
 
-        LocalDate today = LocalDate.of(2026, 8, 23);
+        LocalDate today = LocalDate.now();
 
         LocalDate from;
         LocalDate to;
@@ -24,41 +24,85 @@ public class Main {
             to = from.plusDays(3);
         }
 
+        LocalDate nextFrom = from.plusDays(7);
+        LocalDate nextTo = to.plusDays(7);
+
         System.out.println("Today: " + today);
         System.out.println("From: " + from);
         System.out.println("To: " + to);
 
-        List<Match> matches = footballApi.getFixtures(from, to);
-
-        int row = 2;
+        // Current match week
+        List<Match> matches =
+                footballApi.getFixtures(from, to);
 
         for (Match match : matches) {
+
             if (match.getLeague().getLeagueId() != 15) {
                 continue;
             }
 
+            String matchName =
+                    match.getHomeTeam().getTeamName() +
+                            " vs " +
+                            match.getAwayTeam().getTeamName();
+
             System.out.println(
                     "Match: " +
-                            match.getHomeTeam().getTeamName() +
-                            " vs " +
-                            match.getAwayTeam().getTeamName() +
+                            matchName +
                             " - Score: " +
                             match.getScore() +
                             " - Date: " +
                             match.getMatchDate()
             );
 
-            googleSheets.updateRow(
-                    row,
-                    match.getHomeTeam().getTeamName() +
-                            " vs " +
-                            match.getAwayTeam().getTeamName(),
+            googleSheets.updateOrAddMatch(
+                    matchName,
                     match.getStatus(),
                     match.getMatchDate(),
                     match.getScore()
             );
+        }
 
-            row++;
+        // Monday: add the following match week
+        if (today.getDayOfWeek() == DayOfWeek.MONDAY) {
+
+            System.out.println(
+                    "Next match week: " +
+                            nextFrom +
+                            " -> " +
+                            nextTo
+            );
+
+            List<Match> nextMatches =
+                    footballApi.getFixtures(nextFrom, nextTo);
+
+            for (Match match : nextMatches) {
+
+                if (match.getLeague().getLeagueId() != 15) {
+                    continue;
+                }
+
+                String matchName =
+                        match.getHomeTeam().getTeamName() +
+                                " vs " +
+                                match.getAwayTeam().getTeamName();
+
+                System.out.println(
+                        "Adding next week: " +
+                                matchName +
+                                " - Score: " +
+                                match.getScore() +
+                                " - Date: " +
+                                match.getMatchDate()
+                );
+
+                googleSheets.updateOrAddMatch(
+                        matchName,
+                        match.getStatus(),
+                        match.getMatchDate(),
+                        match.getScore()
+                );
+            }
         }
     }
 }
