@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import dto.League;
@@ -30,10 +31,10 @@ public class Match {
     }
 
     public String getMatchDate () {
-        DateTimeFormatter input = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss");
-        DateTimeFormatter output = DateTimeFormatter.ofPattern("EEEE d, yyyy, hh:mm a");
+        DateTimeFormatter input = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter output = DateTimeFormatter.ofPattern("EEEE d, MMM yyyy, hh:mm a z");
         LocalDateTime dateTime = LocalDateTime.parse(match_date, input);
-        return dateTime.format(output);
+        return dateTime.atZone(ZoneId.of("America/Toronto")).format(output);
     }
 
     public String getStatus() {
