@@ -42,7 +42,6 @@ public class FootballApi {
 
 
     private String buildFixturesUrl(LocalDate from, LocalDate to) {
-
         return BASE_URL + "/fixtures/upcoming?league_id=15" + "&from=" + from + "&to=" + to;
     }
 
