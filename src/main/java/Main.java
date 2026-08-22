@@ -41,10 +41,7 @@ public class Main {
                 continue;
             }
 
-            String matchName =
-                    match.getHomeTeam().getTeamName() +
-                            " vs " +
-                            match.getAwayTeam().getTeamName();
+            String matchName = match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName();
 
             System.out.println(
                     "Match: " +
@@ -63,7 +60,36 @@ public class Main {
             );
         }
 
-        // Monday: add the following match week
+        List<Match> results =
+                footballApi.getResults(from, to);
+
+        System.out.println("RESULTS:");
+
+        for (Match match : results) {
+            if (match.getLeague().getLeagueId() != 15) {
+                continue;
+            }
+
+            String matchName = match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName();
+
+            System.out.println(
+                    match.getHomeTeam().getTeamName()
+                            + " vs "
+                            + match.getAwayTeam().getTeamName()
+                            + " - "
+                            + match.getScore()
+                            + " - "
+                            + match.getStatus()
+            );
+
+            googleSheets.updateOrAddMatch(
+                    matchName,
+                    match.getStatus(),
+                    match.getMatchDate(),
+                    match.getScore()
+            );
+        }
+
         if (today.getDayOfWeek() == DayOfWeek.MONDAY) {
 
             System.out.println(
@@ -96,12 +122,12 @@ public class Main {
                                 match.getMatchDate()
                 );
 
-//                googleSheets.updateOrAddMatch(
-//                        matchName,
-//                        match.getStatus(),
-//                        match.getMatchDate(),
-//                        match.getScore()
-//                );
+                googleSheets.updateOrAddMatch(
+                        matchName,
+                        match.getStatus(),
+                        match.getMatchDate(),
+                        match.getScore()
+                );
             }
         }
     }
