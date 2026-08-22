@@ -96,12 +96,12 @@ public class Main {
                                 match.getMatchDate()
                 );
 
-                googleSheets.updateOrAddMatch(
-                        matchName,
-                        match.getStatus(),
-                        match.getMatchDate(),
-                        match.getScore()
-                );
+//                googleSheets.updateOrAddMatch(
+//                        matchName,
+//                        match.getStatus(),
+//                        match.getMatchDate(),
+//                        match.getScore()
+//                );
             }
         }
     }

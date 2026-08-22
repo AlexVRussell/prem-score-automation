@@ -31,6 +31,15 @@ public class FootballApi {
         return parseMatches(response.body());
     }
 
+    public List<Match> getResults(LocalDate from, LocalDate to) {
+        String url = buildResultsUrl(from, to);
+        System.out.println("REQUEST URL: " + url);
+        HttpRequest request = buildRequest(url);
+        HttpResponse<String> response = sendRequest(request);
+
+        return parseMatches(response.body());
+    }
+
     private List<Match> parseMatches(String json) {
         Gson gson = new Gson();
 
@@ -52,6 +61,15 @@ public class FootballApi {
                 .GET()
                 .build();
     }
+
+    private String buildResultsUrl(LocalDate from, LocalDate to) {
+        return BASE_URL
+                + "/fixtures/results"
+                + "?league_id=" + PREMIER_LEAGUE_ID
+                + "&from=" + from
+                + "&to=" + to;
+    }
+
     private HttpResponse<String> sendRequest(HttpRequest request) {
 
         try {
