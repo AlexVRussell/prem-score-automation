@@ -32,9 +32,9 @@ public class Match {
 
     public String getMatchDate () {
         DateTimeFormatter input = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter output = DateTimeFormatter.ofPattern("EEEE d, MMM yyyy, hh:mm a z");
+        DateTimeFormatter output = DateTimeFormatter.ofPattern("EEEE d, MMM yyyy, hh:mm");
         LocalDateTime dateTime = LocalDateTime.parse(match_date, input);
-        return dateTime.atZone(ZoneId.of("America/Toronto")).format(output);
+        return dateTime.atZone(ZoneId.of("America/Toronto")).format(output) + " " + (dateTime.atZone(ZoneId.of("America/Toronto")).getHour() < 12 ? "AM" : "PM") + " EDT";
     }
 
     public String getStatus() {
