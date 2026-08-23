@@ -31,7 +31,6 @@ public class Main {
         System.out.println("From: " + from);
         System.out.println("To: " + to);
 
-        // Current match week
         List<Match> matches =
                 footballApi.getFixtures(from, to);
 
