@@ -102,24 +102,31 @@ public class GoogleSheets {
             String date,
             String score) {
 
+        match = normalizeMatchName(match);
+
         List<List<Object>> rows = getRows();
 
         for (int i = 1; i < rows.size(); i++) {
 
             List<Object> row = rows.get(i);
 
-            if (!row.isEmpty() &&
-                    row.get(0).toString().equals(match)) {
+            if (!row.isEmpty()) {
 
-                updateRow(
-                        i + 1,
-                        match,
-                        status,
-                        date,
-                        score.toString()
-                );
+                String existingMatch =
+                        normalizeMatchName(row.get(0).toString());
 
-                return;
+                if (existingMatch.equals(match)) {
+
+                    updateRow(
+                            i + 1,
+                            match,
+                            status,
+                            date,
+                            score
+                    );
+
+                    return;
+                }
             }
         }
 
@@ -130,7 +137,11 @@ public class GoogleSheets {
                 match,
                 status,
                 date,
-                score.toString()
+                score
         );
+    }
+
+    private String normalizeMatchName(String match) {
+        return match.replace("&amp;", "&");
     }
 }
