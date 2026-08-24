@@ -41,6 +41,9 @@ public class Match {
         return status;
     }
 
+    public String getRawMatchDate() {
+        return match_date; // should return 2026-08-28
+    }
 
     // look into other statuses, to make response shape have the best context
     @Override

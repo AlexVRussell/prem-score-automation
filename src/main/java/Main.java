@@ -36,10 +36,6 @@ public class Main {
 
         for (Match match : matches) {
 
-            if (match.getLeague().getLeagueId() != 15) {
-                continue;
-            }
-
             String matchName = match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName();
 
             System.out.println(
@@ -65,10 +61,6 @@ public class Main {
         System.out.println("RESULTS:");
 
         for (Match match : results) {
-            if (match.getLeague().getLeagueId() != 15) {
-                continue;
-            }
-
             String matchName = match.getHomeTeam().getTeamName() + " vs " + match.getAwayTeam().getTeamName();
 
             System.out.println(
@@ -101,11 +93,9 @@ public class Main {
             List<Match> nextMatches =
                     footballApi.getFixtures(nextFrom, nextTo);
 
+            nextMatches.sort((a, b) -> a.getRawMatchDate().compareTo(b.getRawMatchDate()));
+            
             for (Match match : nextMatches) {
-
-                if (match.getLeague().getLeagueId() != 15) {
-                    continue;
-                }
 
                 String matchName =
                         match.getHomeTeam().getTeamName() +

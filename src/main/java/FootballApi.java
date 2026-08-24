@@ -2,7 +2,6 @@ import com.google.gson.Gson;
 
 import java.net.http.HttpClient;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -12,9 +11,7 @@ public class FootballApi {
     private final String apiKey;
     private final HttpClient client;
     private static final String BASE_URL = "https://footballdata.io/api/v1";
-    private static final String FIXTURES_ENDPOINT = "/fixtures";
     private static final int PREMIER_LEAGUE_ID = 15;
-    private static final int CURRENT_SEASON = 2025;
 
 
     public FootballApi(Config config) {
@@ -24,16 +21,13 @@ public class FootballApi {
 
     public List<Match> getFixtures(LocalDate from, LocalDate to) {
         String url = buildFixturesUrl(from, to);
-        System.out.println("REQUEST URL: " + url);
         HttpRequest request = buildRequest(url);
         HttpResponse<String> response = sendRequest(request);
-        System.out.println("RESPONSE: " + response.body());
         return parseMatches(response.body());
     }
 
     public List<Match> getResults(LocalDate from, LocalDate to) {
         String url = buildResultsUrl(from, to);
-        System.out.println("REQUEST URL: " + url);
         HttpRequest request = buildRequest(url);
         HttpResponse<String> response = sendRequest(request);
 
