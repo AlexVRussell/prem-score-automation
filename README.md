@@ -25,7 +25,7 @@ application to be running locally.
 - google sheets api (reading and updating google sheets)
 - footballdata.io API (https://footballdata.io/dashboard/)
 - gh actions (scheduled automation)
-- maven (dependancy management)
+- maven (dependency management)
 
 
 
