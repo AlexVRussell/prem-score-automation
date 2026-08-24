@@ -20,12 +20,12 @@ application to be running locally.
 
 ---
 
-- java (cuz why not, prolly shouldve used python)
-- google cloud services
+- java (cuz why not)
+- google cloud services (google sheets api credentials + service authentication)
+- google sheets api (reading and updating google sheets)
 - footballdata.io API (https://footballdata.io/dashboard/)
-- google sheets API 
-- gh actions
-- maven
+- gh actions (scheduled automation)
+- maven (dependancy management)
 
 
 
