@@ -13,12 +13,18 @@ public class FootballApi {
     private static final String BASE_URL = "https://footballdata.io/api/v1";
     private static final int PREMIER_LEAGUE_ID = 15;
 
-
     public FootballApi(Config config) {
         this.apiKey = config.getKey();
         this.client = HttpClient.newHttpClient();
     }
 
+    /**
+     * Collects all fixtures from a given time range to be added to master spread sheet
+     *
+     * @param from
+     * @param to
+     * @return parsedMatches()
+     */
     public List<Match> getFixtures(LocalDate from, LocalDate to) {
         String url = buildFixturesUrl(from, to);
         HttpRequest request = buildRequest(url);
@@ -26,6 +32,13 @@ public class FootballApi {
         return parseMatches(response.body());
     }
 
+    /**
+     * Collects all results from a given time range to update fixture matches
+     *
+     * @param from
+     * @param to
+     * @return parsedMatches()
+     */
     public List<Match> getResults(LocalDate from, LocalDate to) {
         String url = buildResultsUrl(from, to);
         HttpRequest request = buildRequest(url);
@@ -34,6 +47,12 @@ public class FootballApi {
         return parseMatches(response.body());
     }
 
+    /**
+     * Parses the JSON response into a list of Match objects.
+     *
+     * @param json
+     * @return List<Match></Match>
+     */
     private List<Match> parseMatches(String json) {
         Gson gson = new Gson();
 
